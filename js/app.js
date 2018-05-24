@@ -2,6 +2,21 @@
  * Create a list that holds all of your cards
  */
 
+var array = [
+        "a1",
+        "a2",
+        "b1",
+        "b2",
+        "c1",
+        "c2",
+        "d1",
+        "d2",
+        "e1",
+        "e2",
+        "f1",
+        "f2"
+    ]
+
 
 /*
  * Display the cards on the page
@@ -26,6 +41,7 @@ function shuffle(array) {
 }
 
 
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -36,3 +52,7 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+const refresh = document.querySelector('.restart');
+refresh.addEventListener('click', function(){
+   console.log('CLicked!') 
+});
