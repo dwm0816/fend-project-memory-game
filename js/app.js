@@ -2,6 +2,8 @@
  * Create a list that holds all of your cards
  */
 
+var deck = [];
+
 var array = [
         "a1",
         "a2",
@@ -16,6 +18,21 @@ var array = [
         "f1",
         "f2"
     ]
+
+
+function deckList(){
+    for (var i = 1; i < 36; i++) {
+        let cad = document.querySelector('.card')
+        deck.push(cad);
+    }
+}
+
+
+
+deckList();
+console.log(deck)
+
+
 
 
 /*
@@ -39,6 +56,13 @@ function shuffle(array) {
 
     return array;
 }
+
+// var arr = [2, 11, 37, 42];
+// arr = shuffle(arr);
+// console.log(arr);
+
+
+
 
 
 
