@@ -48,7 +48,10 @@ function shuffle(array) {
 // console.log(arr);
 deck = shuffle(deck); draw();
 function draw(){
-    
+    for (let i = 0; i <= 16; i++){
+        const deckHead = document.querySelector('.deck');
+        deckHead.appendChild(deck[i]);
+    }
 }
 
 
