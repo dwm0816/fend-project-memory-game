@@ -21,10 +21,10 @@ var array = [
 
 
 function deckList(){
-    for (var i = 1; i < 36; i++) {
-        let cad = document.querySelector('.card')
+    // for (var i = 1; i < 36; i++) {
+        let cad = document.querySelectorAll('.card')
         deck.push(cad);
-    }
+    // }
 }
 
 
@@ -62,8 +62,8 @@ function shuffle(array) {
 // console.log(arr);
 
 
-
-
+deck = shuffle(deck);
+console.log(deck);
 
 
 /*
