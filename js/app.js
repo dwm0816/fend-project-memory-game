@@ -3,36 +3,21 @@
  */
 
 var deck = [];
-
-var array = [
-        "a1",
-        "a2",
-        "b1",
-        "b2",
-        "c1",
-        "c2",
-        "d1",
-        "d2",
-        "e1",
-        "e2",
-        "f1",
-        "f2"
-    ]
-
+var cadx;
 
 function deckList(){
-    // for (var i = 1; i < 36; i++) {
-        let cad = document.querySelectorAll('.card')
-        deck.push(cad);
-    // }
+    for (var i = 0; i < 16; i++) {
+        let cad = document.querySelector('.card')
+        cadx = cad.firstElementChild;
+        deck.push(cadx);
+        cad.remove();
+    }
 }
 
 
 
 deckList();
 console.log(deck)
-
-
 
 
 /*
@@ -57,14 +42,18 @@ function shuffle(array) {
     return array;
 }
 
+
 // var arr = [2, 11, 37, 42];
 // arr = shuffle(arr);
 // console.log(arr);
+deck = shuffle(deck); draw();
+function draw(){
+    
+}
 
 
-deck = shuffle(deck);
+
 console.log(deck);
-
 
 /*
  * set up the event listener for a card. If a card is clicked:
