@@ -4,8 +4,18 @@
 
 var deck = [];
 
+let eventType;
+
+function flip(type){
+    if(eventType === 1){
+        
+    } else if (eventType === 2){
+        
+    }
+}
+
 function deckList(){
-    for (var i = 0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
         let cad = document.querySelector('.card');
         deck.push(cad); cad.remove();
     }
@@ -68,4 +78,17 @@ console.log(deck);
 const refresh = document.querySelector('.restart');
 refresh.addEventListener('click', function(){
    console.log('CLicked!') 
+});
+
+document.querySelector('.deck').addEventListener('click', function(trueCheck){
+    let strike = event.target;
+    if (trueCheck.target.nodeName === 'LI'){
+        console.log('potate');
+        console.log(strike);
+        eventType = 1;
+        flip();
+    } else if (trueCheck.target.nodeName === 'I'){
+        eventType = 2;
+        flip();
+    }
 });
