@@ -4,12 +4,12 @@
 
 var deck = [];
 var turn = 0;
+var began = false;
 
 let eventType;
 
-function flip(type){
-        event.target.classList.toggle('open'); event.target.classList.toggle('show');
-        turn = turn + 1;
+function flip(hitTarget){
+        hitTarget.classList.toggle('open'); hitTarget.classList.toggle('show');
 }
 
 function deckList(){
@@ -59,12 +59,28 @@ deck = shuffle(deck); draw();
 const refresh = document.querySelector('.restart');
 refresh.addEventListener('click', function(){
    location.reload(false);
-   console.log('game');
 });
 
 document.querySelector('.deck').addEventListener('click', function(trueCheck){
+    let hitClick = event.target
     if (trueCheck.target.nodeName === 'LI'){
-        flip();
+        flip(hitClick);
+        turn = turn + 1;
     }
 });
 
+
+
+if (began === false) {
+    setTimeout(function beginFlip(){
+        for (let i = 0; i < 16; i++){
+            let hitClick = deck[i];
+            flip(hitClick);
+        }
+    }, 5000);
+}
+
+//Star time!
+if (turn > 10) {
+    
+}
