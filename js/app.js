@@ -3,20 +3,21 @@
  */
 
 var deck = [];
-var cadx;
 
 function deckList(){
     for (var i = 0; i < 16; i++) {
-        let cad = document.querySelector('.card')
-        cadx = cad.firstElementChild;
-        deck.push(cadx);
-        cad.remove();
+        let cad = document.querySelector('.card');
+        deck.push(cad); cad.remove();
+    }
+} deckList();
+
+function draw(){
+    for (let i = 0; i < 16; i++){
+        const deckHead = document.querySelector('.deck');
+        deckHead.appendChild(deck[i]);
     }
 }
 
-
-
-deckList();
 console.log(deck)
 
 
@@ -47,12 +48,8 @@ function shuffle(array) {
 // arr = shuffle(arr);
 // console.log(arr);
 deck = shuffle(deck); draw();
-function draw(){
-    for (let i = 0; i <= 16; i++){
-        const deckHead = document.querySelector('.deck');
-        deckHead.appendChild(deck[i]);
-    }
-}
+
+
 
 
 
