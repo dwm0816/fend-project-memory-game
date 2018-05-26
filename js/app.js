@@ -3,15 +3,13 @@
  */
 
 var deck = [];
+var turn = 0;
 
 let eventType;
 
 function flip(type){
-    if(eventType === 1){
-        
-    } else if (eventType === 2){
-        
-    }
+        event.target.classList.toggle('open'); event.target.classList.toggle('show');
+        turn = turn + 1;
 }
 
 function deckList(){
@@ -31,13 +29,6 @@ function draw(){
 console.log(deck)
 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -53,17 +44,7 @@ function shuffle(array) {
     return array;
 }
 
-
-// var arr = [2, 11, 37, 42];
-// arr = shuffle(arr);
-// console.log(arr);
 deck = shuffle(deck); draw();
-
-
-
-
-
-console.log(deck);
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -77,18 +58,13 @@ console.log(deck);
  */
 const refresh = document.querySelector('.restart');
 refresh.addEventListener('click', function(){
-   console.log('CLicked!') 
+   location.reload(false);
+   console.log('game');
 });
 
 document.querySelector('.deck').addEventListener('click', function(trueCheck){
-    let strike = event.target;
     if (trueCheck.target.nodeName === 'LI'){
-        console.log('potate');
-        console.log(strike);
-        eventType = 1;
-        flip();
-    } else if (trueCheck.target.nodeName === 'I'){
-        eventType = 2;
         flip();
     }
 });
+
