@@ -5,11 +5,61 @@
 var deck = [];
 var turn = 0;
 var began = false;
-
-let eventType;
+var eventType;
+var active = 0;
+var suitA;
+var suitB;
+var open;
 
 function flip(hitTarget){
         hitTarget.classList.toggle('open'); hitTarget.classList.toggle('show');
+        
+        if (active < 1){
+            suitA = hitTarget.firstElementChild;
+            active = active + 1;
+            
+        } else if (active < 2){
+            suitB = hitTarget.firstElementChild;
+            active = active + 1;
+            suitChecker()
+        }else if (active => 2){
+            suitA = null; suitB = null;
+            active = 0;
+        }
+        
+        if (turn => 10) {
+            starCounter();
+        }
+}
+
+
+
+function suitChecker(){
+    if (suitA === suitB){
+        
+    }
+}
+
+
+
+function starCounter(){
+        if (turn === 10) {
+            const starCounter = document.querySelector('.stars');
+            const star = starCounter.firstElementChild;
+            starCounter.removeChild(star);
+            
+        } else if (turn === 15){
+            const starCounter = document.querySelector('.stars');
+            const star = starCounter.firstElementChild;
+            starCounter.removeChild(star);
+        
+        } else if (turn > 19){
+            const starCounter = document.querySelector('.stars');
+            const star = starCounter.firstElementChild;
+            starCounter.removeChild(star);
+            alert('GAME OVER');
+            location.reload(true);
+        }
 }
 
 function deckList(){
@@ -69,8 +119,6 @@ document.querySelector('.deck').addEventListener('click', function(trueCheck){
     }
 });
 
-
-
 if (began === false) {
     setTimeout(function beginFlip(){
         for (let i = 0; i < 16; i++){
@@ -81,6 +129,3 @@ if (began === false) {
 }
 
 //Star time!
-if (turn > 10) {
-    
-}
