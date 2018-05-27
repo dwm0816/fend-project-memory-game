@@ -11,13 +11,13 @@ var matchCount = 0;
 var winModal = document.getElementById('winModal');
 var winTime = document.querySelector('.modalTime')
 //TODO : 
-        //Formatting code
         //Animation
-        //That's... that's p much it... Annotation I guess.
 
-//Startup process
+////////////////////////////////////
+//STARTUP PROCESS <<<<<<<<<<<<<<<<//
+////////////////////////////////////
 
-//Adds all cards to var deck, removes them from rendered space
+//Adds all cards to var deck, removes them from rendered space.
 function deckList(){
     for (let i = 0; i < 16; i++) {
         let cad = document.querySelector('.card');
@@ -60,19 +60,55 @@ if (began === false) {
         time = 1
     }, 5000);
 }
-//Begins the timer function.
+//Begins the timer function after a short delay.
 if (time => 1){
     setTimeout(timer, 5000); 
 }
 
+/////////////////////////////////
+//UX Functions <<<<<<<<<<<<<<<<//
+////////////////////////////////
+//Simply soft refreshes the page.
+const refresh = document.querySelector('.restart');
+refresh.addEventListener('click', function(){
+   location.reload(false);
+});
 
+//Takes the event 'click' then executes a function. Function makes sure the clicked target was a li element, then executes the flip function with event.target as the operator.
+document.querySelector('.deck').addEventListener('click', function(trueCheck){
+    let hitClick = event.target;
+    let turnCounter = document.querySelector('.moves');
+    console.log();
+    
+    if (suitB === undefined){
+        if (trueCheck.target.nodeName === 'LI' && hitClick.classList[1] != "open"){
+            flip(hitClick);
+           cardCheck(hitClick);
+            turn += 1;
+            turnCounter.textContent = turn;
+        }    
+    } else {
+        console.log('Too many moves!');
+    }
+});
 
+//Restart button on modal success screen
+document.querySelector('.exit').addEventListener('click', function(){
+   winModal.style.display = "none";
+   location.reload(true);
+});
 
+/////////////////////////////////////////
+//BACKGROUND FUNCTIONS <<<<<<<<<<<<<<<<//
+////////////////////////////////////////
 
+//Basic Flip function for flipping clicked cards
+function flip(hitTarget){
+        hitTarget.classList.toggle('open'); hitTarget.classList.toggle('show');
+        starCounter();
+}
 
-
-
-
+//Timer function for counting and updating the UI timer.
 function timer(){
     let gameTime = document.querySelector('.time');
     let fixedTime = time.toFixed(0);
@@ -85,9 +121,10 @@ function timer(){
     } else if (timer => 601) {
         fail();
     }
-        
 }
 
+
+//Function for bringing up the Modal popup for winning
 function win(){
     if(matchCount === 8){
        console.log('blorp');
@@ -99,11 +136,13 @@ function win(){
     }
 }
 
+//Function for pinging a fail alert and reloading the game
 function fail(){
     alert('GAME OVER');
     location.reload(true);
 }
 
+//Function for reseting card variable data and resetting the second card trigger variable
 function cardReset(){
     suitA.parentElement.classList.remove('miss'); suitB.parentElement.classList.remove('miss');
     suitA = undefined;
@@ -114,14 +153,7 @@ function cardReset(){
 }
 
 
-//Basic Flip function
-function flip(hitTarget){
-        hitTarget.classList.toggle('open'); hitTarget.classList.toggle('show');
-        // cardCheck(hitTarget); //fix that
-        starCounter();
-}
-
-//Checks if first or second card, Assigns relavent variable to said card, increases the active counter. Runs suit check function on second.
+//Checks if first or second card, Assigns relavent variable to said card, increases the active counter. Runs suit check function on second. Enables second card trigger variable.
 function cardCheck (target){
         if (active === 0){
             suitA = target.firstElementChild;
@@ -136,7 +168,7 @@ function cardCheck (target){
 }
 
 
-//Checks the card variables for proper suit, if matched; adds the match class. If not, flips the cards back. In theory.
+//Checks the card variables for proper suit, if matched; adds the match class. If not, flips the cards back.
 function suitChecker(){
     let pointCounter = document.querySelector('.points');
     if (suitA.classList[1] === suitB.classList[1]){
@@ -181,40 +213,3 @@ function starCounter(){
             fail();
         }
 }
-
-
-
-
-
-
-
-
-//Simply soft refreshes the page.
-const refresh = document.querySelector('.restart');
-refresh.addEventListener('click', function(){
-   location.reload(false);
-});
-
-//Takes the event 'click' then executes a function. Function makes sure the clicked target was a li element, then executes the flip function with event.target as the operator.
-document.querySelector('.deck').addEventListener('click', function(trueCheck){
-    let hitClick = event.target;
-    let turnCounter = document.querySelector('.moves');
-    console.log();
-    
-    if (suitB === undefined){
-        if (trueCheck.target.nodeName === 'LI' && hitClick.classList[1] != "open"){
-            flip(hitClick);
-           cardCheck(hitClick);
-            turn += 1;
-            turnCounter.textContent = turn;
-        }    
-    } else {
-        console.log('Too many moves!');
-    }
-});
-
-document.querySelector('.exit').addEventListener('click', function(){
-   winModal.style.display = "none";
-   location.reload(true);
-});
-
