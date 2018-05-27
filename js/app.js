@@ -4,13 +4,13 @@ var began = false;
 var active = 0  ;
 var suitA;
 var suitB;
+var winCondition = 0;
 var tick;
 var points = 0;
 var time = 0;
-var starCount = 3;
 var matchCount = 0;
 var winModal = document.getElementById('winModal');
-var winTime = document.querySelector('.modalTime')
+var winTime = document.querySelector('.modalTime');
 //TODO : 
         //Animation
 
@@ -58,7 +58,7 @@ if (began === false) {
             let hitClick = deck[i];
             flip(hitClick);
         }
-        time = 1
+        time = 1;
     }, 5000);
 }
 //Begins the timer function after a short delay.
@@ -80,7 +80,7 @@ document.querySelector('.deck').addEventListener('click', function(trueCheck){
     let hitClick = event.target;
     let turnCounter = document.querySelector('.moves');
     if (suitB === undefined){
-        if (trueCheck.target.nodeName === 'LI' && hitClick.classList[1] != "open"){
+        if (trueCheck.target.nodeName === 'LI' && hitClick.classList[1] != "open" && hitClick.classList[1] != "match"){
             flip(hitClick);
            cardCheck(hitClick);
             turn += 1;
@@ -111,14 +111,14 @@ function flip(hitTarget){
 function timer(){
     let gameTime = document.querySelector('.time');
     let fixedTime = time.toFixed(0);
-    if(time < 601){
+    if(time < 601 && winCondition === 0){
         setTimeout(function clock(){
             time += 1;
             gameTime.textContent = fixedTime;
             timer();
         }, 1000);    
-    } else if (timer => 601) {
-        fail();
+    } else if(winCondition != 1) {
+      fail();   
     }
 }
 
@@ -126,10 +126,11 @@ function timer(){
 //Function for bringing up the Modal popup for winning
 function win(){
     if(matchCount === 8){
-       let winPoints = document.querySelector('.modalPoints')
+       let winPoints = document.querySelector('.modalPoints');
         winPoints.textContent = points;
         winTime.textContent = time;
         winModal.style.display = "block";
+        winCondition = 1;
         finalStar();
     }
 }
@@ -208,7 +209,6 @@ function starCounter(){
         } else if (turn > 29){
             const starCounter = document.querySelector('.stars');
             const star = starCounter.firstElementChild;
-            starCounter.removeChild(star);
             fail();
             
         }
