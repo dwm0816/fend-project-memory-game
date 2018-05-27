@@ -21,4 +21,3 @@ After there is no longer a deadline I will be continuin with this project. I hav
 Minifying the code is a major need at this stage. A bit of formatting is also needed for readability. 
 I will make these changes as time allows.
 
-<h3>You can play the game <a href='https://dwm0816.github.io/fend-project-memory-game/'>here</a></h3>
