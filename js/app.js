@@ -7,10 +7,9 @@ var suitB;
 var tick;
 var points = 0;
 var time = 0;
-var starCount = 3;
 var matchCount = 0;
 var winModal = document.getElementById('winModal');
-var winTime = document.querySelector('.modalTime')
+var winTime = document.querySelector('.modalTime');
 //TODO : 
         //Animation
 
@@ -58,7 +57,7 @@ if (began === false) {
             let hitClick = deck[i];
             flip(hitClick);
         }
-        time = 1
+        time = 1;
     }, 5000);
 }
 //Begins the timer function after a short delay.
@@ -129,7 +128,7 @@ function timer(){
 function win(){
     if(matchCount === 8){
        console.log('blorp');
-       let winPoints = document.querySelector('.modalPoints')
+       let winPoints = document.querySelector('.modalPoints');
         winPoints.textContent = points;
         winTime.textContent = time;
         winModal.style.display = "block";
