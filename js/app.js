@@ -7,6 +7,7 @@ var suitB;
 var tick;
 var points = 0;
 var time = 0;
+var starCount = 3;
 var matchCount = 0;
 var winModal = document.getElementById('winModal');
 var winTime = document.querySelector('.modalTime')
@@ -132,7 +133,7 @@ function win(){
         winPoints.textContent = points;
         winTime.textContent = time;
         winModal.style.display = "block";
-        
+        finalStar();
     }
 }
 
@@ -200,6 +201,7 @@ function starCounter(){
             const starCounter = document.querySelector('.stars');
             const star = starCounter.firstElementChild;
             starCounter.removeChild(star);
+            starCount -= 1;
             
         } else if (turn === 25){
             const starCounter = document.querySelector('.stars');
@@ -211,5 +213,12 @@ function starCounter(){
             const star = starCounter.firstElementChild;
             starCounter.removeChild(star);
             fail();
+            
         }
+}
+
+//Takes final star count and adds it to the win screen
+function finalStar(){
+    let winStar = document.querySelector('.stars');
+    document.querySelector('#starBox').append(winStar);
 }
