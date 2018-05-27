@@ -1,67 +1,23 @@
-/*
- * Create a list that holds all of your cards
- */
-
 var deck = [];
 var turn = 0;
 var began = false;
-var eventType;
-var active = 0;
+var active = 0  ;
 var suitA;
 var suitB;
-var open;
+var tick;
+var points = 0;
+var time = 0;
+var matchCount = 0;
+var winModal = document.getElementById('winModal');
+var winTime = document.querySelector('.modalTime')
+//TODO : 
+        //Formatting code
+        //Animation
+        //That's... that's p much it... Annotation I guess.
 
-function flip(hitTarget){
-        hitTarget.classList.toggle('open'); hitTarget.classList.toggle('show');
-        
-        if (active < 1){
-            suitA = hitTarget.firstElementChild;
-            active = active + 1;
-            
-        } else if (active < 2){
-            suitB = hitTarget.firstElementChild;
-            active = active + 1;
-            suitChecker()
-        }else if (active => 2){
-            suitA = null; suitB = null;
-            active = 0;
-        }
-        
-        if (turn => 10) {
-            starCounter();
-        }
-}
+//Startup process
 
-
-
-function suitChecker(){
-    if (suitA === suitB){
-        
-    }
-}
-
-
-
-function starCounter(){
-        if (turn === 10) {
-            const starCounter = document.querySelector('.stars');
-            const star = starCounter.firstElementChild;
-            starCounter.removeChild(star);
-            
-        } else if (turn === 15){
-            const starCounter = document.querySelector('.stars');
-            const star = starCounter.firstElementChild;
-            starCounter.removeChild(star);
-        
-        } else if (turn > 19){
-            const starCounter = document.querySelector('.stars');
-            const star = starCounter.firstElementChild;
-            starCounter.removeChild(star);
-            alert('GAME OVER');
-            location.reload(true);
-        }
-}
-
+//Adds all cards to var deck, removes them from rendered space
 function deckList(){
     for (let i = 0; i < 16; i++) {
         let cad = document.querySelector('.card');
@@ -69,15 +25,8 @@ function deckList(){
     }
 } deckList();
 
-function draw(){
-    for (let i = 0; i < 16; i++){
-        const deckHead = document.querySelector('.deck');
-        deckHead.appendChild(deck[i]);
-    }
-}
-
-console.log(deck)
-
+//Takes the deck, shuffles it with the shuffle function. Calls the draw function.
+deck = shuffle(deck); draw();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -90,42 +39,182 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
-deck = shuffle(deck); draw();
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-const refresh = document.querySelector('.restart');
-refresh.addEventListener('click', function(){
-   location.reload(false);
-});
-
-document.querySelector('.deck').addEventListener('click', function(trueCheck){
-    let hitClick = event.target
-    if (trueCheck.target.nodeName === 'LI'){
-        flip(hitClick);
-        turn = turn + 1;
+//Takes the var deck and renders all cards.
+function draw(){
+    for (let i = 0; i < 16; i++){
+        const deckHead = document.querySelector('.deck');
+        deckHead.appendChild(deck[i]);
     }
-});
+}
 
+//Checks if an initialization has occured yet, if not, executes function stack.
 if (began === false) {
     setTimeout(function beginFlip(){
         for (let i = 0; i < 16; i++){
             let hitClick = deck[i];
             flip(hitClick);
         }
+        time = 1
     }, 5000);
 }
+//Begins the timer function.
+if (time => 1){
+    setTimeout(timer, 5000); 
+}
 
-//Star time!
+
+
+
+
+
+
+
+
+function timer(){
+    let gameTime = document.querySelector('.time');
+    let fixedTime = time.toFixed(0);
+    if(time < 601){
+        setTimeout(function clock(){
+            time += 1;
+            gameTime.textContent = fixedTime;
+            timer();
+        }, 1000);    
+    } else if (timer => 601) {
+        fail();
+    }
+        
+}
+
+function win(){
+    if(matchCount === 8){
+       console.log('blorp');
+       let winPoints = document.querySelector('.modalPoints')
+        winPoints.textContent = points;
+        winTime.textContent = time;
+        winModal.style.display = "block";
+        
+    }
+}
+
+function fail(){
+    alert('GAME OVER');
+    location.reload(true);
+}
+
+function cardReset(){
+    suitA.parentElement.classList.remove('miss'); suitB.parentElement.classList.remove('miss');
+    suitA = undefined;
+    suitB = undefined;
+    tick = false;
+    active = 0;
+
+}
+
+
+//Basic Flip function
+function flip(hitTarget){
+        hitTarget.classList.toggle('open'); hitTarget.classList.toggle('show');
+        // cardCheck(hitTarget); //fix that
+        starCounter();
+}
+
+//Checks if first or second card, Assigns relavent variable to said card, increases the active counter. Runs suit check function on second.
+function cardCheck (target){
+        if (active === 0){
+            suitA = target.firstElementChild;
+            active = active + 1;
+            tick = true;
+        } else if (tick === true){
+            suitB = target.firstElementChild;
+            active = active + 1;
+            suitChecker();
+            
+        }
+}
+
+
+//Checks the card variables for proper suit, if matched; adds the match class. If not, flips the cards back. In theory.
+function suitChecker(){
+    let pointCounter = document.querySelector('.points');
+    if (suitA.classList[1] === suitB.classList[1]){
+        
+        suitA.parentElement.classList.add('match'); suitB.parentElement.classList.add('match');
+        suitA.parentElement.classList.remove('show'); suitA.parentElement.classList.remove('open');
+        suitB.parentElement.classList.remove('show'); suitB.parentElement.classList.remove('open');
+        points += 10;
+        pointCounter.textContent = points;
+        matchCount += 1;
+        win();
+        cardReset();
+    } else {
+        suitA.parentElement.classList.add('miss'); suitB.parentElement.classList.add('miss');
+        setTimeout(function reFlip(){
+            suitA.parentElement.classList.toggle('open'); suitA.parentElement.classList.toggle('show');
+            suitB.parentElement.classList.toggle('open'); suitB.parentElement.classList.toggle('show');
+            points -= 2;
+            pointCounter.textContent = points;
+            cardReset();
+        }, 1000);
+    }
+}
+
+
+//Deletes stars after x turns.
+function starCounter(){
+        if (turn === 16) {
+            const starCounter = document.querySelector('.stars');
+            const star = starCounter.firstElementChild;
+            starCounter.removeChild(star);
+            
+        } else if (turn === 25){
+            const starCounter = document.querySelector('.stars');
+            const star = starCounter.firstElementChild;
+            starCounter.removeChild(star);
+        
+        } else if (turn > 29){
+            const starCounter = document.querySelector('.stars');
+            const star = starCounter.firstElementChild;
+            starCounter.removeChild(star);
+            fail();
+        }
+}
+
+
+
+
+
+
+
+
+//Simply soft refreshes the page.
+const refresh = document.querySelector('.restart');
+refresh.addEventListener('click', function(){
+   location.reload(false);
+});
+
+//Takes the event 'click' then executes a function. Function makes sure the clicked target was a li element, then executes the flip function with event.target as the operator.
+document.querySelector('.deck').addEventListener('click', function(trueCheck){
+    let hitClick = event.target;
+    let turnCounter = document.querySelector('.moves');
+    console.log();
+    
+    if (suitB === undefined){
+        if (trueCheck.target.nodeName === 'LI' && hitClick.classList[1] != "open"){
+            flip(hitClick);
+           cardCheck(hitClick);
+            turn += 1;
+            turnCounter.textContent = turn;
+        }    
+    } else {
+        console.log('Too many moves!');
+    }
+});
+
+document.querySelector('.exit').addEventListener('click', function(){
+   winModal.style.display = "none";
+   location.reload(true);
+});
+
