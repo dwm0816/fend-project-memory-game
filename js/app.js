@@ -79,8 +79,6 @@ refresh.addEventListener('click', function(){
 document.querySelector('.deck').addEventListener('click', function(trueCheck){
     let hitClick = event.target;
     let turnCounter = document.querySelector('.moves');
-    console.log();
-    
     if (suitB === undefined){
         if (trueCheck.target.nodeName === 'LI' && hitClick.classList[1] != "open"){
             flip(hitClick);
@@ -128,7 +126,6 @@ function timer(){
 //Function for bringing up the Modal popup for winning
 function win(){
     if(matchCount === 8){
-       console.log('blorp');
        let winPoints = document.querySelector('.modalPoints')
         winPoints.textContent = points;
         winTime.textContent = time;
