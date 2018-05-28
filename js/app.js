@@ -199,7 +199,6 @@ function starCounter(){
             const starCounter = document.querySelector('.stars');
             const star = starCounter.firstElementChild;
             starCounter.removeChild(star);
-            starCount -= 1;
             
         } else if (turn === 25){
             const starCounter = document.querySelector('.stars');
